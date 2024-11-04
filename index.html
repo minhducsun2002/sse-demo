@@ -1,0 +1,16 @@
+<body>
+    <h1>
+        Current time is <span id="time"></span>
+    </h1>
+    <script>
+        const evt = new EventSource('/time');
+        
+        evt.onopen = () => console.log('connection opened');
+        
+        evt.addEventListener("time", e => {
+            let data = e.data;
+            let obj = JSON.parse(data);
+            document.querySelector('#time').innerText = new Date(obj.time * 1000).toLocaleString('en-GB');
+        })
+    </script>
+</body>
